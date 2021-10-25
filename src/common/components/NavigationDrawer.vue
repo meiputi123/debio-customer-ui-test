@@ -1,0 +1,237 @@
+<style lang="sass" scoped>
+@import "../styles/mixins.sass"
+
+.dg-raleway-font
+  font-family: 'Raleway'
+
+.drawer
+  background: unset !important
+  border: unset !important
+
+.v-navigation-drawer__content
+  overflow: unset !important
+
+.sidebar-text
+  text-transform: none !important
+  letter-spacing: 0 !important
+  font-size: 13pt !important
+
+.btn-drawer
+  align-items: center
+  text-align: left
+  padding-left: 0%
+  justify-content: left
+
+.btnDrawerIcon
+  margin: 0 16px 0 0
+  
+
+.navTitle
+  font-size: 15px
+  font-weight: 600
+
+.lineDivider
+  margin-left: 35px
+  margin-right: 35px
+  margin-top: 5px
+  border-color: #FF56E0 !important
+
+.footerDrawer
+  margin: 65px 0 0 25px
+
+.footerDrawer div 
+  display: flex
+  font-weight: 400
+
+.footerDrawer a
+  font-size: 13px
+  color: grey
+
+.footer
+  align-items: flex-start
+  align-content: flex-start
+  text-align: left
+
+.dbioLogo 
+  margin: 0 32px
+  margin-bottom: 72px
+
+.iconLogo 
+  height: 125px
+  width: 125px
+
+.textBox 
+  margin-bottom: -15px
+  margin-top: -15px
+
+.textLogo 
+  font-size: 30px
+  color: #FF56E0
+
+.subtexBox 
+  margin-top: -5px
+
+.subTextLogo 
+  font-size: 10px
+  margin-top: -10px
+  color: #FF56E0
+
+.text-left 
+  align-content: flex-start
+
+.activeButton 
+  background: linear-gradient(270deg, rgba(255, 255, 255, 0) 75.23%, rgba(195, 0, 164, 0.31) 150.85%)
+  border-left: solid #C400A5 5px
+  margin-left: -5px 
+
+
+</style>
+
+<template lang="pug">
+  v-Navigation-drawer(
+    app
+    clipped
+    fixed
+    permanent
+    :width="width"
+    stateless
+    class="mr-10 pt-10 drawer darken-1"
+  )
+    div.dbioLogo
+      a(
+        href="https://www.degenics.com/"
+        target="_blank"
+        style="text-decoration: none"
+      )
+        div(class="d-flex align-center")
+          v-img(
+            alt="dbio Logo"
+            class="shrink mr-2"
+            contain
+            src="@/assets/debio-logo.png"
+            transition="scale-transition"
+            width="52px"
+            height="52px"
+          )
+          div(class="pt-3 fluid")
+            div(class="textBox")
+              span(class="textLogo font-weight-bold light_primary--text ") DeBio
+            v-row(class="subtextBox")
+              v-col(cols="18" class="ml-3 pa-0")
+                b(class="subTextLogo font-weight-bold light_primary--text ") Powered by
+              v-col(cols="4" class="my-0 ml-0 mt-2 pa-0")
+                v-img(
+                  alt="Octopus Logo"
+                  class="shrink mr-2"
+                  contain
+                  prepend
+                  center
+                  src="@/assets/octopus.png"
+                  transition="scale-transition"
+                  width="9"
+                )
+    v-flex
+      .mx-8.pt-2.pb-2(v-for="(item, key) in items" :key="key")
+        Button.btn-drawer(
+          :class="customClass(item.active)"
+          text
+          @click="goLink(item.route)"
+          block
+          :height="'50px'"
+          :color="'none'"
+        )
+          ui-debio-icon.btnDrawerIcon(
+            :icon="iconLoader(item.text)"
+            size="25"
+            stroke
+            view-box="0 0 25 25"
+            :color="item.active ? '#C400A5' : '#363636'"
+          )
+          span.navTitle {{ item.text }}
+      
+      v-divider.lineDivider
+      .d-flex.flex-column.mx-8
+        slot
+        v-spacer
+
+        div.footerDrawer
+          a(
+              href="https://docs.debio.network/getting-started/how-to-install-metamask"
+              target="_blank"
+              style="text-decoration: none"
+          )
+            div
+              ui-debio-icon.btnDrawerIcon(
+                :icon="phoneIcon"
+                size="16"
+                stroke
+                view-box="0 -3 40 40"
+                :color="'#757274'"
+              )
+              span Customer Care
+</template>
+
+<script>
+
+import Button from "@/common/components/Button"
+import {
+  gridIcon,
+  boxIcon,
+  databaseIcon,
+  fileTextIcon,
+  creditCardIcon,
+  phoneIcon
+} from "@/common/icons"
+
+export default {
+  name: "NavigationDrawer",
+  components: { Button },
+
+  props: {
+    items: { type: Array, default: () => [] },
+
+    width: { type: String, default: "auto" }
+  },
+
+  data: () => ({
+    // style: "background-image: linear-gradient(to right, #C400A5 1%, white 10%)",
+    gridIcon,
+    boxIcon,
+    databaseIcon,
+    fileTextIcon,
+    creditCardIcon,
+    phoneIcon
+  }),
+
+  methods: {
+    goLink(route){
+      this.$router.push({ name: route })
+    },
+
+    openHref(href){
+      window.open(href, "_blank").focus()
+    },
+    iconLoader(name) {
+      if (name == "Dashboard") {
+        return this.gridIcon
+      }
+      if (name == "My Test") {
+        return this.boxIcon
+      }
+      if (name == "My EMR") {
+        return this.fileTextIcon
+      }
+      if (name == "Payment History") {
+        return this.databaseIcon
+      }
+      return this.creditCardIcon
+    },
+    customClass(active) {
+      if (active) {
+        return "font-weight-bold sidebar-text primary--text activeButton"
+      }
+      return "font-weight-bold sidebar-text"
+    }
+  }
+}
+</script>
