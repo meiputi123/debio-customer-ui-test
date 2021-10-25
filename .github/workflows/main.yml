@@ -57,6 +57,7 @@ jobs:
               debio_development/data/frontend_dashboard vue_app_dev_web3_rpc;
               debio_development/data/frontend_dashboard vue_app_recaptcha_site_key;
               debio_development/data/frontend_dashboard vue_app_role;
+              debio_development/data/frontend_file file_data;
 
       - name: Create .env & gcp sa
         shell: bash
@@ -138,4 +139,4 @@ jobs:
           script: |
             docker stop debio_frontend_revamp_demo || true && docker rm debio_frontend_revamp_demo || true
             docker pull ${{ github.repository }}:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
-            docker run -d -p 0.0.0.0:4000:4000 --name=debio_frontend_revamp_demo --env=DEBIOENV=development -v /etc/localtime:/etc/localtime:ro --restart=always ${{ github.repository }}:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
+            docker run -d -p 0.0.0.0:8181:80 --name=debio_frontend_revamp_demo --env=DEBIOENV=development -v /etc/localtime:/etc/localtime:ro --restart=always ${{ github.repository }}:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
