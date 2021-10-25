@@ -58,8 +58,6 @@ jobs:
               debio_development/data/frontend_dashboard vue_app_recaptcha_site_key;
               debio_development/data/frontend_dashboard vue_app_role;
               debio_development/data/frontend_file file_data;
-              debio_development/data/frontend_file file_name;
-              debio_development/data/frontend_file path;
 
       - name: Create .env & gcp sa
         shell: bash
