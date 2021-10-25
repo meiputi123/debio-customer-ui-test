@@ -142,6 +142,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            docker stop debio_frontend_revamp_demo || true && docker rm debio_frontend_revamp_demo || true
+            docker stop debio_frontend_revamp_dev || true && docker rm debio_frontend_revamp_dev || true
             docker pull ${{ github.repository }}:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
             docker run -d --name=debio_frontend_revamp_dev --env=debioenv=development -v /etc/localtime:/etc/localtime:ro -p 0.0.0.0:8085:80 --restart=always ${{ github.repository }}:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
