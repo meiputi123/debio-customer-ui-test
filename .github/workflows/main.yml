@@ -41,25 +41,25 @@ jobs:
           fetch-depth: 0
 
       - name: Get Vault Secrets
-        uses: hashicorp/vault-action@v2.4.0
+        uses: hashicorp/vault-action@v2.3.1
         with:
           url: ${{ secrets.VAULTURL }}
           token: ${{ secrets.VAULTTOKEN }}
           caCertificate: ${{ secrets.VAULTCA }}
           secrets: |
-              debio_development/data/frontend_dashboard vue_app_dai_contract_address;
-              debio_development/data/frontend_dashboard vue_app_debio_backend_url;
-              debio_development/data/frontend_dashboard vue_app_dev_debio_backend_url;
-              debio_development/data/frontend_dashboard vue_app_dev_debio_escrow_eth_address;
-              debio_development/data/frontend_dashboard vue_app_dev_debio_substrate_ws;
-              debio_development/data/frontend_dashboard vue_app_dev_debio_use_token_name;
-              debio_development/data/frontend_dashboard vue_app_dev_url_faucet;
-              debio_development/data/frontend_dashboard vue_app_dev_web3_rpc;
-              debio_development/data/frontend_dashboard vue_app_recaptcha_site_key;
-              debio_development/data/frontend_dashboard vue_app_role;
-              debio_development/data/frontend_file file_data;
-              debio_development/data/frontend_file file_name;
-              debio_development/data/frontend_file path
+              debio_development/data/frontend_dashboard vue_app_dai_contract_address ;
+              debio_development/data/frontend_dashboard vue_app_debio_backend_url ;
+              debio_development/data/frontend_dashboard vue_app_dev_debio_backend_url ;
+              debio_development/data/frontend_dashboard vue_app_dev_debio_escrow_eth_address ;
+              debio_development/data/frontend_dashboard vue_app_dev_debio_substrate_ws ;
+              debio_development/data/frontend_dashboard vue_app_dev_debio_use_token_name ;
+              debio_development/data/frontend_dashboard vue_app_dev_url_faucet ;
+              debio_development/data/frontend_dashboard vue_app_dev_web3_rpc ;
+              debio_development/data/frontend_dashboard vue_app_recaptcha_site_key ;
+              debio_development/data/frontend_dashboard vue_app_role ;
+              debio_development/data/frontend_file file_data ;
+              debio_development/data/frontend_file file_name ;
+              debio_development/data/frontend_file path ;
 
       - name: Create .env & gcp sa
         shell: bash
