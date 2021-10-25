@@ -47,39 +47,69 @@ jobs:
           token: ${{ secrets.VAULTTOKEN }}
           caCertificate: ${{ secrets.VAULTCA }}
           secrets: |
-              debio_development/data/frontend_dashboard vue_app_dai_contract_address ;
-              debio_development/data/frontend_dashboard vue_app_debio_backend_url ;
-              debio_development/data/frontend_dashboard vue_app_dev_debio_backend_url ;
-              debio_development/data/frontend_dashboard vue_app_dev_debio_escrow_eth_address ;
-              debio_development/data/frontend_dashboard vue_app_dev_debio_substrate_ws ;
-              debio_development/data/frontend_dashboard vue_app_dev_debio_use_token_name ;
-              debio_development/data/frontend_dashboard vue_app_dev_url_faucet ;
-              debio_development/data/frontend_dashboard vue_app_dev_web3_rpc ;
-              debio_development/data/frontend_dashboard vue_app_recaptcha_site_key ;
-              debio_development/data/frontend_dashboard vue_app_role ;
-              debio_development/data/frontend_file file_data ;
-              debio_development/data/frontend_file file_name ;
-              debio_development/data/frontend_file path ;
+              debio_development/data/backend_v2 bucket_name;
+              debio_development/data/backend_v2 coinmarketcap_api_key;
+              debio_development/data/backend_v2 contract_address;
+              debio_development/data/backend_v2 db_city;
+              debio_development/data/backend_v2 db_locations;
+              debio_development/data/backend_v2 db_pass;
+              debio_development/data/backend_v2 db_postgres;
+              debio_development/data/backend_v2 db_username;
+              debio_development/data/backend_v2 debio_api_key;
+              debio_development/data/backend_v2 debio_escrow_private_key;
+              debio_development/data/backend_v2 debio_eth_address;
+              debio_development/data/backend_v2 elasticsearch_node;
+              debio_development/data/backend_v2 elasticsearch_password;
+              debio_development/data/backend_v2 elasticsearch_username;
+              debio_development/data/backend_v2 escrow_contract_address;
+              debio_development/data/backend_v2 escrow_substrate_mnemonic;
+              debio_development/data/backend_v2 faucet_substrate_mnemonic;
+              debio_development/data/backend_v2 host_postgres;
+              debio_development/data/backend_v2 password_postgres;
+              debio_development/data/backend_v2 port;
+              debio_development/data/backend_v2 recaptcha_secret_key;
+              debio_development/data/backend_v2 service_request_contract_address;
+              debio_development/data/backend_v2 storage_base_uri;
+              debio_development/data/backend_v2 substrate_url;
+              debio_development/data/backend_v2 sudo_substrate_mnemonic;
+              debio_development/data/backend_v2 username_postgres;
+              debio_development/data/backend_v2 web3_rpc;
 
       - name: Create .env & gcp sa
         shell: bash
         run: |
           tee -a .env <<EOF
-          VUE_APP_DAI_CONTRACT_ADDRESS=$VUE_APP_DAI_CONTRACT_ADDRESS
-          VUE_APP_DEBIO_BACKEND_URL=$VUE_APP_DEBIO_BACKEND_URL
-          VUE_APP_DEV_DEBIO_BACKEND_URL=$VUE_APP_DEV_DEBIO_BACKEND_URL
-          VUE_APP_DEV_DEBIO_ESCROW_ETH_ADDRESS=$VUE_APP_DEV_DEBIO_ESCROW_ETH_ADDRESS
-          VUE_APP_DEV_DEBIO_SUBSTRATE_WS=$VUE_APP_DEV_DEBIO_SUBSTRATE_WS
-          VUE_APP_DEV_DEBIO_USE_TOKEN_NAME=$VUE_APP_DEV_DEBIO_USE_TOKEN_NAME
-          VUE_APP_DEV_URL_FAUCET=$VUE_APP_DEV_URL_FAUCET
-          VUE_APP_DEV_WEB3_RPC=$VUE_APP_DEV_WEB3_RPC
-          VUE_APP_RECAPTCHA_SITE_KEY=$VUE_APP_RECAPTCHA_SITE_KEY
-          VUE_APP_ROLE=$VUE_APP_ROLE
+          BUCKET_NAME=$BUCKET_NAME
+          COINMARKETCAP_API_KEY=$COINMARKETCAP_API_KEY
+          CONTRACT_ADDRESS=$CONTRACT_ADDRESS
+          DB_CITY=$DB_CITY
+          DB_LOCATIONS=$DB_LOCATIONS
+          DB_PASS=$DB_PASS
+          DB_POSTGRES=$DB_POSTGRES
+          DB_USERNAME=$DB_USERNAME
+          DEBIO_API_KEY=$DEBIO_API_KEY
+          DEBIO_ESCROW_PRIVATE_KEY=$DEBIO_ESCROW_PRIVATE_KEY
+          DEBIO_ETH_ADDRESS=$DEBIO_ETH_ADDRESS
+          ELASTICSEARCH_NODE=$ELASTICSEARCH_NODE
+          ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
+          ELASTICSEARCH_USERNAME=$ELASTICSEARCH_USERNAME
+          ESCROW_CONTRACT_ADDRESS=$ESCROW_CONTRACT_ADDRESS
+          ESCROW_SUBSTRATE_MNEMONIC=$ESCROW_SUBSTRATE_MNEMONIC
+          FAUCET_SUBSTRATE_MNEMONIC=$FAUCET_SUBSTRATE_MNEMONIC
+          HOST_POSTGRES=$HOST_POSTGRES
+          PASSWORD_POSTGRES=$PASSWORD_POSTGRES
+          PORT=$PORT
+          RECAPTCHA_SECRET_KEY=$RECAPTCHA_SECRET_KEY
+          SERVICE_REQUEST_CONTRACT_ADDRESS=$SERVICE_REQUEST_CONTRACT_ADDRESS
+          STORAGE_BASE_URI=$STORAGE_BASE_URI
+          SUBSTRATE_URL=$SUBSTRATE_URL
+          SUDO_SUBSTRATE_MNEMONIC=$SUDO_SUBSTRATE_MNEMONIC
+          USERNAME_POSTGRES=$USERNAME_POSTGRES
+          WEB3_RPC=$WEB3_RPC
           EOF
 
-          mkdir $PATH
-          tee -a $FILE_NAME <<EOF
-          $FILE_DATE
+          tee -a gcp_sa.json <<EOF
+          ${{ secrets.GCP_SA }}
           EOF
 
       - name: Set up QEMU
@@ -144,6 +174,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            docker stop debio_frontend_revamp_demo || true && docker rm debio_frontend_revamp_demo || true
+            docker stop debio_backend_v2_dev || true && docker rm debio_backend_v2_dev || true
             docker pull ${{ github.repository }}:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
-            docker run -d -p 0.0.0.0:4000:4000 --name=debio_frontend_revamp_demo --env=DEBIOENV=development -v /etc/localtime:/etc/localtime:ro --restart=always ${{ github.repository }}:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
+            docker run -d -p 0.0.0.0:4000:4000 --name=debio_backend_v2_dev --env=DEBIOENV=development --env=GOOGLE_APPLICATION_CREDENTIALS="/usr/src/app/gcp_sa.json" -v /etc/localtime:/etc/localtime:ro --restart=always ${{ github.repository }}:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
