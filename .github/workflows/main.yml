@@ -41,7 +41,7 @@ jobs:
           fetch-depth: 0
 
       - name: Get Vault Secrets
-        uses: hashicorp/vault-action@v2.3.1
+        uses: hashicorp/vault-action@v2.4.0
         with:
           url: ${{ secrets.VAULTURL }}
           token: ${{ secrets.VAULTTOKEN }}
