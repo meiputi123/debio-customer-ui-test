@@ -77,8 +77,8 @@ jobs:
           VUE_APP_ROLE=$VUE_APP_ROLE
           EOF
 
-          mkdir -p $PATH
-          tee -a $FILE_NAME <<EOF
+          mkdir -p src/views/Login/DemoLabAccounts
+          tee -a src/views/Login/DemoLabAccounts/labs.js <<EOF
           $FILE_DATA
           EOF
 
