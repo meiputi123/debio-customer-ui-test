@@ -78,6 +78,7 @@ jobs:
           EOF
 
           mkdir -p $PATH
+          
           tee -a $FILE_NAME <<EOF
           $FILE_DATA
           EOF
