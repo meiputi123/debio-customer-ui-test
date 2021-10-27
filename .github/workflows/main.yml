@@ -64,7 +64,6 @@ jobs:
       - name: Create .env & gcp sa
         shell: bash
         run: |
-          echo $PATH
           tee -a .env <<EOF
           VUE_APP_DAI_CONTRACT_ADDRESS=$VUE_APP_DAI_CONTRACT_ADDRESS
           VUE_APP_DEBIO_BACKEND_URL=$VUE_APP_DEBIO_BACKEND_URL
@@ -78,8 +77,8 @@ jobs:
           VUE_APP_ROLE=$VUE_APP_ROLE
           EOF
 
-          mkdir -p $PATH
-          tee -a $(echo $FILE_NAME) <<EOF
+          mkdir -p "$PATH"
+          tee -a "$FILE_NAME" <<EOF
           $FILE_DATA
           EOF
 
