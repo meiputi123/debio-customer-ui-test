@@ -138,4 +138,4 @@ jobs:
           script: |
             docker stop debio_frontend_revamp_rc || true && docker rm debio_frontend_revamp_rc || true
             docker pull ${{ github.repository }}:${{ needs.compute-build-info.outputs.latest_tag }}
-            docker run -d --name=debio_frontend_revamp_rc --env=debioenv=development -v /etc/localtime:/etc/localtime:ro -p 0.0.0.0:8085:80 --restart=always ${{ github.repository }}:${{ needs.compute-build-info.outputs.latest_tag }}
+            docker run -d --name=debio_frontend_revamp_rc --env=debioenv=development -v /etc/localtime:/etc/localtime:ro -p 0.0.0.0:8087:80 --restart=always ${{ github.repository }}:${{ needs.compute-build-info.outputs.latest_tag }}
