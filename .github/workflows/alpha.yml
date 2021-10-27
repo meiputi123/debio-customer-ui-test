@@ -48,30 +48,26 @@ jobs:
           caCertificate: ${{ secrets.VAULTCA }}
           secrets: |
               debio_staging/data/frontend_dashboard vue_app_dai_contract_address;
-              debio_staging/data/frontend_dashboard vue_app_debio_backend_url;
-              debio_staging/data/frontend_dashboard vue_app_dev_debio_backend_url;
-              debio_staging/data/frontend_dashboard vue_app_dev_debio_escrow_eth_address;
-              debio_staging/data/frontend_dashboard vue_app_dev_debio_substrate_ws;
-              debio_staging/data/frontend_dashboard vue_app_dev_debio_use_token_name;
-              debio_staging/data/frontend_dashboard vue_app_dev_url_faucet;
-              debio_staging/data/frontend_dashboard vue_app_dev_web3_rpc;
+              debio_staging/data/frontend_dashboard vue_app_degenics_backend_url;
+              debio_staging/data/frontend_dashboard vue_app_degenics_escrow_eth_address;
+              debio_staging/data/frontend_dashboard vue_app_degenics_substrate_ws;
+              debio_staging/data/frontend_dashboard vue_app_degenics_use_token_name;
               debio_staging/data/frontend_dashboard vue_app_recaptcha_site_key;
-              debio_staging/data/frontend_dashboard vue_app_role;
+              debio_staging/data/frontend_dashboard vue_app_url_faucet;
+              debio_staging/data/frontend_dashboard vue_app_web3_rpc;
 
       - name: Create .env
         shell: bash
         run: |
           tee -a .env <<EOF
           VUE_APP_DAI_CONTRACT_ADDRESS=$VUE_APP_DAI_CONTRACT_ADDRESS
-          VUE_APP_DEBIO_BACKEND_URL=$VUE_APP_DEBIO_BACKEND_URL
-          VUE_APP_DEV_DEBIO_BACKEND_URL=$VUE_APP_DEV_DEBIO_BACKEND_URL
-          VUE_APP_DEV_DEBIO_ESCROW_ETH_ADDRESS=$VUE_APP_DEV_DEBIO_ESCROW_ETH_ADDRESS
-          VUE_APP_DEV_DEBIO_SUBSTRATE_WS=$VUE_APP_DEV_DEBIO_SUBSTRATE_WS
-          VUE_APP_DEV_DEBIO_USE_TOKEN_NAME=$VUE_APP_DEV_DEBIO_USE_TOKEN_NAME
-          VUE_APP_DEV_URL_FAUCET=$VUE_APP_DEV_URL_FAUCET
-          VUE_APP_DEV_WEB3_RPC=$VUE_APP_DEV_WEB3_RPC
+          VUE_APP_DEGENICS_BACKEND_URL=$VUE_APP_DEGENICS_BACKEND_URL
+          VUE_APP_DEGENICS_ESCROW_ETH_ADDRESS=$VUE_APP_DEGENICS_ESCROW_ETH_ADDRESS
+          VUE_APP_DEGENICS_SUBSTRATE_WS=$VUE_APP_DEGENICS_SUBSTRATE_WS
+          VUE_APP_DEGENICS_USE_TOKEN_NAME=$VUE_APP_DEGENICS_USE_TOKEN_NAME
           VUE_APP_RECAPTCHA_SITE_KEY=$VUE_APP_RECAPTCHA_SITE_KEY
-          VUE_APP_ROLE=$VUE_APP_ROLE
+          VUE_APP_URL_FAUCET=$VUE_APP_URL_FAUCET
+          VUE_APP_WEB3_RPC=$VUE_APP_WEB3_RPC
           EOF
 
       - name: Set up QEMU
