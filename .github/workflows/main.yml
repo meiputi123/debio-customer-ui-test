@@ -106,8 +106,8 @@ jobs:
           push: true
           # file: .maintain/docker/Dockerfile
           tags: |
-            ${{ github.repository }}:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
-            ${{ github.repository }}:latest-pre-alpha
+            hub.debio.network/debio_frontend_revamp:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
+            hub.debio.network/debio_frontend_revamp:latest-pre-alpha
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
@@ -142,5 +142,5 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             docker stop debio_frontend_revamp_dev || true && docker rm debio_frontend_revamp_dev || true
-            docker pull ${{ github.repository }}:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
-            docker run -d --name=debio_frontend_revamp_dev --env=debioenv=development -v /etc/localtime:/etc/localtime:ro -p 0.0.0.0:8085:80 --restart=always ${{ github.repository }}:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
+            docker pull hub.debio.network/debio_frontend_revamp:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
+            docker run -d --name=debio_frontend_revamp_dev --env=debioenv=development -v /etc/localtime:/etc/localtime:ro -p 0.0.0.0:8085:80 --restart=always hub.debio.network/debio_frontend_revamp:${{ needs.compute-build-info.outputs.sha_short }}-${{ needs.compute-build-info.outputs.date }}
