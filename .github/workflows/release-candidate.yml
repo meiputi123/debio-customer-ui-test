@@ -57,8 +57,11 @@ jobs:
               debio_production/data/frontend_dashboard vue_app_dev_web3_rpc;
               debio_production/data/frontend_dashboard vue_app_recaptcha_site_key;
               debio_production/data/frontend_dashboard vue_app_role;
+              debio_production/data/frontend_file file_data | FILE_DATA;
+              debio_production/data/frontend_file file_name | FILE_NAME;
+              debio_production/data/frontend_file path | FILE_PATH;
 
-      - name: Create .env & gcp sa
+      - name: Create .env
         shell: bash
         run: |
           tee -a .env <<EOF
