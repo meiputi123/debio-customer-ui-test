@@ -77,7 +77,7 @@ jobs:
           VUE_APP_ROLE=$VUE_APP_ROLE
           EOF
 
-          mkdir -p FILE_PATH
+          mkdir -p $FILE_PATH
           tee -a $FILE_NAME <<EOF
           $FILE_DATA
           EOF
