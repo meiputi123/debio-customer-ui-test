@@ -57,9 +57,9 @@ jobs:
               debio_development/data/frontend_dashboard vue_app_dev_web3_rpc;
               debio_development/data/frontend_dashboard vue_app_recaptcha_site_key;
               debio_development/data/frontend_dashboard vue_app_role;
-              debio_development/data/frontend_file file_data;
-              debio_development/data/frontend_file file_name;
-              debio_development/data/frontend_file path;
+              debio_development/data/frontend_file file_data | FILE_DATA;
+              debio_development/data/frontend_file file_name | FILE_NAME;
+              debio_development/data/frontend_file path | FILE_PATH;
 
       - name: Create .env & gcp sa
         shell: bash
@@ -77,10 +77,8 @@ jobs:
           VUE_APP_ROLE=$VUE_APP_ROLE
           EOF
 
-          path_file="$PATH"
-          name="$FILE_NAME"
-          mkdir -p $path_file
-          tee -a $name <<EOF
+          mkdir -p FILE_PATH
+          tee -a $FILE_NAME <<EOF
           $FILE_DATA
           EOF
 
