@@ -77,6 +77,8 @@ jobs:
           VUE_APP_ROLE=$VUE_APP_ROLE
           EOF
 
+          echo "Halo"
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
