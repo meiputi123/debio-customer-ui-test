@@ -1,9 +1,8 @@
 name: Release automation
 
 on:
-  push:
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
+  release:
+    types: [published]
 
 concurrency:
   group: release-automation
@@ -117,7 +116,8 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  deploy:
+  deploy-pre-release:
+    if: "github.event.release.prerelease"
     runs-on: ubuntu-latest
 
     needs: [compute-build-info, build-and-publish-docker-image]
@@ -128,14 +128,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: reload service
-        uses: appleboy/ssh-action@master
+      - name: Deploy Pre Release
+        shell: bash
+        run: |
+          echo "Deploy pre release success!"
+
+  deploy-release:
+    if: "!github.event.release.prerelease"
+    runs-on: ubuntu-latest
+
+    needs: [compute-build-info, build-and-publish-docker-image]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            docker stop debio_frontend_revamp_prod || true && docker rm debio_frontend_revamp_prod || true
-            docker pull hub.debio.network/debio_frontend_revamp:${{ needs.compute-build-info.outputs.latest_tag }}
-            docker run -d --name=debio_frontend_revamp_prod --env=debioenv=development -v /etc/localtime:/etc/localtime:ro -p 0.0.0.0:8089:80 --restart=always hub.debio.network/debio_frontend_revamp:${{ needs.compute-build-info.outputs.latest_tag }}
+          fetch-depth: 0
+
+      - name: Deploy Release
+        shell: bash
+        run: |
+          echo "Deploy release success!"
