@@ -2,7 +2,7 @@ name: Release-candidate automation
 
 on:
   release:
-    types: [published]
+    types: [deleted]
 
 concurrency:
   group: release-candidate-automation
