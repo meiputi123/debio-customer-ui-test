@@ -142,3 +142,29 @@ jobs:
             docker stop debio_frontend_revamp_staging || true && docker rm debio_frontend_revamp_staging || true
             docker pull hub.debio.network/debio_frontend_revamp:${{ needs.compute-build-info.outputs.latest_tag }}
             docker run -d --name=debio_frontend_revamp_staging --env=debioenv=development -v /etc/localtime:/etc/localtime:ro -p 0.0.0.0:8086:80 --restart=always hub.debio.network/debio_frontend_revamp:${{ needs.compute-build-info.outputs.latest_tag }}
+
+  publish-draft-alpha-release:
+    runs-on: self-hosted
+
+    needs: [deploy]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Build changelog
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          configuration: '.github/workflows/rcb_config.json'
+
+      - name: Create draft release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{ steps.build_changelog.outputs.changelog }}
+          draft: true
+          prerelease: true
